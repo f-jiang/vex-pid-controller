@@ -102,7 +102,7 @@ void operatorControl()
 
 	while (true) {
 		// cycle through increments
-		if (toggleBtnGet(1, 7, JOY_RIGHT)) {
+		if (toggleBtnGet(1, 7, JOY_RIGHT) == BUTTON_PRESSED) {
 			i = ++i % 3;
 		}
 
@@ -141,8 +141,9 @@ void operatorControl()
 		}
 
 		input = analogReadCalibrated(inputChannel);	// get sensor reading
-		printf("p: %5f i: %5f d: %5f\r\n", kp, ki, kd);
-		printf("current position: %5f setpoint: %5f\r\n", input, setpoint);
+		printf("enabled: %d cur pos: %5f setpoint: %5f increment: %5f p: %5f i: %5f d: %5f\r",
+				isEnabled, input, setpoint, increments[i], kp, ki, kd);
+		printf("%100s\r", "");
 
 		// pid loop on/off
 		if (toggleBtnGet(1, 8, JOY_DOWN) == BUTTON_PRESSED) {
@@ -185,6 +186,7 @@ void operatorControl()
 
 		motorSet(outputChannel, output);	// run motor
 
+		toggleBtnUpdateAll();
 		delay(20);
 	}
 }
