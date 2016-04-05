@@ -102,9 +102,11 @@ void operatorControl()
 
 	while (true) {
 		// cycle through increments
-//		if (toggleBtnGet(1, 7, JOY_RIGHT) == BUTTON_PRESSED) {
-//			i = ++i % 3;
-//		}
+		if (toggleBtnGet(1, 7, JOY_RIGHT) == BUTTON_PRESSED) {
+			if (++i >= 3) {
+				i = 0;
+			}
+		}
 
 		// adjust kp, ki, and kd
 		if (toggleBtnGet(1, 7, JOY_UP) == BUTTON_PRESSED) {
