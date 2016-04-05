@@ -79,8 +79,8 @@ void operatorControl()
 	toggleBtnInit(1, 7, JOY_RIGHT);	// cycle through increments
 
 	// input and output devices
-	const uint8_t inputChannel = 0;
-	const uint8_t outputChannel = 0;
+	const uint8_t inputChannel = 1;
+	const uint8_t outputChannel = 6;
 
 	analogCalibrate(inputChannel);
 
@@ -95,16 +95,16 @@ void operatorControl()
 	float input = 0, output = 0;
 	float proportional = 0, integral = 0, derivative = 0;
 
-	const int16_t inputMin = -4095;
+	const int16_t inputMin = 7;
 	const int16_t inputMax = 4095;
-	const int8_t outputMin = -127;
-	const int8_t outputMax = 127;
+	const int8_t outputMin = -60;
+	const int8_t outputMax = 60;
 
 	while (true) {
 		// cycle through increments
-		if (toggleBtnGet(1, 7, JOY_RIGHT) == BUTTON_PRESSED) {
-			i = ++i % 3;
-		}
+//		if (toggleBtnGet(1, 7, JOY_RIGHT) == BUTTON_PRESSED) {
+//			i = ++i % 3;
+//		}
 
 		// adjust kp, ki, and kd
 		if (toggleBtnGet(1, 7, JOY_UP) == BUTTON_PRESSED) {
@@ -140,10 +140,9 @@ void operatorControl()
 			setpoint = inputMin;
 		}
 
-		input = analogReadCalibrated(inputChannel);	// get sensor reading
-		printf("enabled: %d cur pos: %5f setpoint: %5f increment: %5f p: %5f i: %5f d: %5f\r",
+		input = analogRead(inputChannel);	// get sensor reading
+		printf("enabled: %d cur pos: %8f setpoint: %8f increment: %8f p: %8f i: %8f d: %8f\r",
 				isEnabled, input, setpoint, increments[i], kp, ki, kd);
-		printf("%100s\r", "");
 
 		// pid loop on/off
 		if (toggleBtnGet(1, 8, JOY_DOWN) == BUTTON_PRESSED) {
